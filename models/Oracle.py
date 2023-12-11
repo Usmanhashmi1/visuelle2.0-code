@@ -22,6 +22,10 @@ class Oracle(pl.LightningModule):
         
         return y_hat.unsqueeze(-1) # BS x Forecast horizon (ts len) x TS dim
 
+    def nbeats_forcast(self, X):
+        pass
+        
+
     def ses_forecast(self, X):
         y_hat = []
         use_teacher_forcing = True if np.random.random() < self.use_teacher_forcing else False
@@ -66,6 +70,8 @@ class Oracle(pl.LightningModule):
             y_hat = self.naive_forecast(X)
         elif self.method == "ses":
             y_hat = self.ses_forecast(X)
+        elif self.method == "nbeats":
+            y_hat = self.nbeats_forcast(X)
         else:
             y_hat = self.holt_forecast(X)
         
